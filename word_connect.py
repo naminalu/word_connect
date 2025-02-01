@@ -40,7 +40,7 @@ class WordConnect:
                 # 連結対象の単語がすべて一致するかチェックする.
                 for j, p in enumerate(tmp, 1):
                     c = words[i + j]
-                    if c == '' or p != c:
+                    if p != c:
                         break
                 else:
                     # 文字列を連結、不要になった要素を削除する.
