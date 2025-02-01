@@ -37,14 +37,16 @@ class WordConnect:
             if word not in self.dic:
                 continue
 
-            for j, tmp in enumerate(self.dic[word]):
+            for tmp in self.dic[word]:
                 # 連結対象の単語がすべて一致するかチェックする.
+                j = 1
                 for p in tmp:
-                    c = words[i + 1 + j]
+                    c = words[i + j]
                     if c == '':
-                        return False
+                        break
                     if p != c:
-                        return False
+                        break
+                    j += 1
                 else:
                     # 文字列を連結、不要になった要素を削除する.
                     words[i] = word + ''.join(tmp)
