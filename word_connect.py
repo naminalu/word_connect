@@ -39,14 +39,10 @@ class WordConnect:
 
             for tmp in self.dic[word]:
                 # 連結対象の単語がすべて一致するかチェックする.
-                j = 1
-                for p in tmp:
+                for j, p in enumerate(tmp, 1):
                     c = words[i + j]
-                    if c == '':
+                    if c == '' or p != c:
                         break
-                    if p != c:
-                        break
-                    j += 1
                 else:
                     # 文字列を連結、不要になった要素を削除する.
                     words[i] = word + ''.join(tmp)
