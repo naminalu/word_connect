@@ -24,8 +24,7 @@ class WordConnect:
 
         while True:
             if self.convert_list(words) == False:
-                del words[-1]
-                line = ' '.join(words)
+                line = ' '.join(words[:-1])
                 break
         return line
 
@@ -59,7 +58,7 @@ def main() -> int:
 
     for d in data:
         l = w.conver_str(d.rstrip())
-        print(l)
+        print('[' + l + ']')
 
     pass
 
