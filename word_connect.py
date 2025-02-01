@@ -10,31 +10,26 @@ class WordConnect:
         with open(file, encoding='utf8') as f:
             data = f.readlines()
 
-        max_num = 0
         for d in data:
             p = d.rstrip().split(' ')
             k = p[0]
             if k not in self.dic:
                 self.dic[k] = []
             self.dic[k].append(p[1:])
-            if len(p[1:]) > max_num:
-                max_num = len(p[1:])
-        self.max_word_num = max_num
    
     def conver_str(self, line: str) -> str:
         words = line.split(' ')
-        # 処理を簡単にするために、空文字の配列を追加する.
-        words.extend(['' for n in range(self.max_word_num)])
+        # 処理を簡単にするために、空文字を追加する.
+        words.append('')
 
         while True:
-            l = len(words)
-            self.convert_list(words)
-            if l == len(words):
+            if self.convert_list(words) == False:
+                del words[-1]
                 line = ' '.join(words)
                 break
         return line
 
-    def convert_list(self, words: list[str]):
+    def convert_list(self, words: list[str]) -> bool:
         for i, word in enumerate(words):
             if word == '':
                 break
@@ -45,13 +40,17 @@ class WordConnect:
             for j, tmp in enumerate(self.dic[word]):
                 # 連結対象の単語がすべて一致するかチェックする.
                 for p in tmp:
-                    if p != words[i + 1 + j]:
-                        break
+                    c = words[i + 1 + j]
+                    if c == '':
+                        return False
+                    if p != c:
+                        return False
                 else:
                     # 文字列を連結、不要になった要素を削除する.
                     words[i] = word + ''.join(tmp)
                     del words[i+1:i+1+len(tmp)]
-                    return
+                    return True
+        return False
 
 def main() -> int:
     w = WordConnect(sys.argv[1])
